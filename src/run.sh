@@ -13,13 +13,13 @@ send_message () {
 
 while true; do
   available=$(df -PB 1M | grep -e "^$FILESYSTEM" | awk '{ print $4 }')
-  echo "Available: ${available}MB"
+  echo "Available: ${available} MB"
 
   if (( $available > $MIN_FREE_SPACE)); then
     message_sent=false
   elif ! $message_sent; then
     echo "Sending message to Pushover"
-    send_message "The free disk space on lenders.dev has dropped below ${MIN_FREE_SPACE}MB"
+    send_message "$PUSHOVER_MESSAGE"
     message_sent=true
   fi
 
